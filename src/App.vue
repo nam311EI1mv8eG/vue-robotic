@@ -46,7 +46,7 @@ main .rightside{
     flex:0 0 30%;
     width: 30%;
     max-width: 30%;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 header{
   display: flex;

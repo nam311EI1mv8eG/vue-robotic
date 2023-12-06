@@ -1,16 +1,22 @@
 <template>
     <div class="left-side"><h1>FPT Robotics Challenge 2023</h1></div>
-    <div class="right-side"><img src="https://cth.edu.vn/wp-content/uploads/school.fpt_.edu_.vn/pic/News/hieuungan_636300950145295540_HasThumb.png" alt=""></div>
+    <div class="right-side"><img src="../assets/logo.png" alt=""></div>
 </template>
 
 <script>
+// import logo from "./assets/logo.png";
 export default {
 
 }
 </script>
 
 <style>
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
     .right-side img{
-        max-width: 300px;
+        max-width: 250px;
     }
 </style>

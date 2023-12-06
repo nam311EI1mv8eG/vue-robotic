@@ -7,7 +7,7 @@
             <label :for="v.name">{{v.name}}</label>
         </div>
     </div>
-    <h3>Qualification Rankings</h3>
+    <h2>Qualification Rankings</h2>
     <table>
   <tr>
     <th>Rank</th>
@@ -19,15 +19,15 @@
     <th>M1</th>
     <th>AvgScore</th>
   </tr>
-  <tr v-for="(value,index) in filterTeamWithScore" :key="index">
+  <tr v-for="(value,index) in filterTeamWithScore" :key="index" :class="index < 3 ? 'top' : ''">
     <td>{{ index + 1 }}</td>
-    <td>{{ value.name }}</td>
+    <td>{{ value.name }} ({{ value.n_order }})</td>
     <td v-for="i in 5" :key="i" :class="i">
         <span v-if="typeof value.score[5-i] !== 'undefined'">{{ value.score[5-i] }}</span>
-        <span v-else>0</span>
+        <span v-else>-</span>
         
     </td>    
-    <td>{{value.avg}}</td>
+    <td><b class="blue">{{value.avg}}</b></td>
   </tr>
   
 </table>
@@ -66,6 +66,8 @@ export default {
                     teamDetail.id =  v.id;
                     teamDetail.name = v.name;
                     teamDetail.score = [];
+                    teamDetail.avg = v.score;
+                    teamDetail.n_order = v.n_order;
                     standing.push(teamDetail);
                 });
 
@@ -98,12 +100,7 @@ export default {
                     }
                 }); 
 
-                for (let i = 0; i < standing.length; i++) {
-                    var sum = standing[i].score.reduce((accumulator, currentValue) => {
-                        return accumulator + currentValue
-                    },0);
-                    standing[i].avg = sum / 5;
-                }
+               
 
                 standing.sort((a, b) => a.avg > b.avg ? -1 : 1);
                 // standing.sort((a, b) => a.avg.localeCompare(b.avg));
@@ -164,17 +161,36 @@ table {
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
-  padding: 8px;
-  background: #fff;
+  padding: 4px 8px;
+  
+  font-size: 14px;
 }
-
+tr{
+    background: #fff;
+}
 tr:nth-child(even) {
-  background-color: #ccc;
+  background-color: #f5efef;
+}
+tr.top{
+    background: #6b6bcb;
+    color: #fff;
+}
+tr.top b.blue{
+    color:#beff00;
 }
 
 #season{
     display: flex;
     gap: 30px;
+    font-size: 12px;
 }
-
+#season .radio{
+    display: flex;
+    align-items: center;
+    color:#000;
+}
+#season .radio input{
+    margin-bottom: 0;
+    margin-top: 0;
+}
 </style>

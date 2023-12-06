@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;500&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -25,15 +27,25 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background: #C0FF72;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 300;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2.2em;
   line-height: 1.1;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+h2{
+    margin: 0;
+}
+h3{
+    margin-top: 10px;
 }
 
 button {
@@ -62,8 +74,9 @@ button:focus-visible {
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: light) {

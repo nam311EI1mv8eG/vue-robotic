@@ -1,21 +1,26 @@
 <template>
-  <h4>Math Schedule and Results</h4>
-    <div class="schedule-result">
-        <div v-for="(val,index) in getScheduleAndResult" :key="index" class="match">
+  <h2>Math Schedule and Results</h2>
+    <div class="schedule-result" >
+        <div v-for="(val,index) in getScheduleAndResult" :key="index" class="match" :class="val.finish == 1 ? 'finish' : ''">
             <div class="match-order">Q{{ val.order }}</div>
             <div class="red-team red">
                 <span v-for="(v,i) in val.red_team[0]" :key="i">
-                    {{ v.team.score }}
+                    {{ v.team.name }}
                 </span>
             </div>
             <div class="blue-team blue">
                 <span v-for="(v,i) in val.blue_team[0]" :key="i">
-                    {{ v.team.score }}
+                    {{ v.team.name }}
                 </span>
             </div>
             <div class="total">
-                <span class="red">{{ val.red_score }}</span>
-                <span class="blue">{{ val.blue_score }}</span>
+                <span v-if="val.finish == 1" class="red">
+                    Finish
+                </span>
+                <span v-else class="nam"><b>
+                    Sân {{ val.field }}<br>
+                    {{ convertTime(val.time) }}
+                </b></span>
             </div>
         </div>
     </div>
@@ -36,6 +41,8 @@ export default {
     
     computed : { 
 
+        
+
         getScheduleAndResult(){
             if (this.matches !== undefined) {
                 const teamWidthSeason = this.matches.filter((team) => team.season_id == this.currentSeason);
@@ -51,6 +58,7 @@ export default {
                     match.red_score = v.red_score;
                     match.blue_score = v.blue_score;
                     match.finish = v.is_finished;
+                    match.field = v.field;
 
                     if(v.match_match_teams.length > 0){
                         const red = v.match_match_teams.filter((x) => {
@@ -81,7 +89,17 @@ export default {
         })  
     },
     methods : {        
+        convertTime(time){
+            var result = "";
+            var date_arr = time.split(":"); 
+            var hours = date_arr[0];
+            var minutes = date_arr[1];
 
+            var amORpm = hours > 12 ? "PM" : "AM";
+            if(hours > 12) hours -= 12;
+            result = hours + ":" + minutes + " " + amORpm;
+            return result;
+        },
         ...mapActions({
             getAllMatchAction : "getAllMatchAction"
         }),        
@@ -104,9 +122,10 @@ export default {
     .schedule-result .match{
         display: flex;
         align-items: center;
+        padding: 5px;
     }
     .schedule-result .match:nth-child(2n){
-        background: #ccc;
+        background: #f5efef;
     }
     .schedule-result .match > div{
         flex:1;
