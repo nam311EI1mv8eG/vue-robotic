@@ -33,3 +33,11 @@ export const getAllMatchesInSeasonApi = async (id) => {
     });
     return res.data;
 };
+
+export const getAllMatchApi = async (id) => {
+    const res = await axios({
+        method: "GET", // GET , POST , PUT , DELETE
+        url: `http://45.120.81.98:4454/api/v1/matches`,
+    });
+    return res.data;
+};

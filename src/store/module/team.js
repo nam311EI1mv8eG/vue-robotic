@@ -3,6 +3,7 @@ import {
     getAllMatchTeamApi,
     getAllSeasonApi,
     getAllMatchesInSeasonApi,
+    getAllMatchApi,
 } from "../../apis/teams";
 
 const state = () => {
@@ -12,6 +13,7 @@ const state = () => {
         allSeason: [],
         matchesInSeason: [],
         currentSeason: 1,
+        matches: [],
     };
 };
 const getters = {
@@ -40,6 +42,10 @@ const mutations = {
     setCurrentSeasonMutation(state, payload) {
         state.currentSeason = payload;
     },
+
+    setAllMatchAction(state, payload) {
+        state.matches = payload;
+    },
 };
 const actions = {
     async getAllTeamAction(context) {
@@ -57,6 +63,11 @@ const actions = {
     async getAllMatchesInSeasonAction({ commit, state }) {
         const payload = await getAllMatchesInSeasonApi(state.currentSeason);
         commit("setAllMatchesInSeasonMutation", payload);
+    },
+
+    async getAllMatchAction({ commit, state }) {
+        const payload = await getAllMatchApi();
+        commit("setAllMatchAction", payload);
     },
 
     async getCurrentSeasonAction(context, payload) {

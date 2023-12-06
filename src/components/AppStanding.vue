@@ -1,33 +1,33 @@
 <template>
 
-    <h3>Season</h3>
+    
     <div id="season">
-
         <div v-for="(v,i) in allSeason" :key="i" class="radio">
-            <input type="radio" id="jack" name="season" :value="v.id" @change="getCurrentSeasonAction(v.id)" :checked="v.id == currentSeason">
-            <label for="jack">{{v.name}}</label>
+            <input type="radio" :id="v.name" name="season" :value="v.id" @change="getCurrentSeasonAction(v.id)" :checked="v.id == currentSeason">
+            <label :for="v.name">{{v.name}}</label>
         </div>
     </div>
-    <h3>Bảng xếp hạng</h3>
+    <h3>Qualification Rankings</h3>
     <table>
   <tr>
-    <th>STT</th>
+    <th>Rank</th>
     <th>Team </th>
-    <th>Trận 5</th>
-    <th>Trận 4</th>
-    <th>Trận 3</th>
-    <th>Trận 2</th>
-    <th>Trận 1</th>
-    <th>Điểm TB</th>
+    <th>M5</th>
+    <th>M4</th>
+    <th>M3</th>
+    <th>M2</th>
+    <th>M1</th>
+    <th>AvgScore</th>
   </tr>
   <tr v-for="(value,index) in filterTeamWithScore" :key="index">
-    <td>{{ value.id }}</td>
+    <td>{{ index + 1 }}</td>
     <td>{{ value.name }}</td>
-    <td v-for="(n,i) in 5" :key="i" :class="i">
-        <span v-if="typeof value.score[i] !== 'undefined'">{{ value.score[i] }}</span>
+    <td v-for="i in 5" :key="i" :class="i">
+        <span v-if="typeof value.score[5-i] !== 'undefined'">{{ value.score[5-i] }}</span>
         <span v-else>0</span>
+        
     </td>    
-    <td>{{calculateScore(value.score)}}</td>
+    <td>{{value.avg}}</td>
   </tr>
   
 </table>
@@ -67,7 +67,7 @@ export default {
                     teamDetail.name = v.name;
                     teamDetail.score = [];
                     standing.push(teamDetail);
-                });  
+                });
 
                 this.matchesInSeason.filter((team) => {
                     if(team.match_match_teams !== undefined){  
@@ -75,10 +75,20 @@ export default {
                             let index = standing.find((v, idx) => {
                                 if(v.id == team.match_match_teams[i].team_id){
                                     if(team.match_match_teams[i].alliance == 1){
-                                        standing[idx].score.push(team.red_score);
+
+                                        if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
+                                            standing[idx].score.push(0);
+                                        }else{
+                                            standing[idx].score.push(team.red_score);
+                                        }                                       
+                                        
                                     }
                                     if(team.match_match_teams[i].alliance == 2){
-                                        standing[idx].score.push(team.blue_score);
+                                        if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
+                                            standing[idx].score.push(0);
+                                        }else{
+                                            standing[idx].score.push(team.blue_score);
+                                        }  
                                     }
                                 }
                             });
@@ -87,6 +97,16 @@ export default {
 
                     }
                 }); 
+
+                for (let i = 0; i < standing.length; i++) {
+                    var sum = standing[i].score.reduce((accumulator, currentValue) => {
+                        return accumulator + currentValue
+                    },0);
+                    standing[i].avg = sum / 5;
+                }
+
+                standing.sort((a, b) => a.avg > b.avg ? -1 : 1);
+                // standing.sort((a, b) => a.avg.localeCompare(b.avg));
 
                 console.log(standing);
 
@@ -111,14 +131,7 @@ export default {
         
         
     },
-    methods : {
-
-        calculateScore(arr){
-            var sum = arr.reduce((accumulator, currentValue) => {
-                return accumulator + currentValue
-            },0);
-            return sum;
-        },
+    methods : {       
 
         ...mapActions({
             getAllTeamAction : "getAllTeamAction",
@@ -152,14 +165,16 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  background: #fff;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #ccc;
 }
 
 #season{
     display: flex;
     gap: 30px;
 }
+
 </style>
