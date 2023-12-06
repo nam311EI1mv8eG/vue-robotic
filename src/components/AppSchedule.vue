@@ -4,23 +4,28 @@
         <div v-for="(val,index) in getScheduleAndResult" :key="index" class="match" :class="val.finish == 1 ? 'finish' : ''">
             <div class="match-order">Q{{ val.order }}</div>
             <div class="red-team red">
-                <span v-for="(v,i) in val.red_team[0]" :key="i">
+                <span v-for="(v,i) in val.red_team" :key="i">
                     {{ v.team.name }}
                 </span>
             </div>
             <div class="blue-team blue">
-                <span v-for="(v,i) in val.blue_team[0]" :key="i">
+                <span v-for="(v,i) in val.blue_team" :key="i">
                     {{ v.team.name }}
                 </span>
             </div>
             <div class="total">
-                <span v-if="val.finish == 1" class="red">
-                    Finish
+                <span v-if="val.red_score > 0 || val.blue_score > 0" class="red">
+                    <b>
+                        {{ val.red_score }}<br>
+                        {{ val.blue_score }}
+                    </b>
                 </span>
-                <span v-else class="nam"><b>
-                    Sân {{ val.field }}<br>
-                    {{ convertTime(val.time) }}
-                </b></span>
+                <span v-else class="nam">
+                    <b>
+                        Sân {{ val.field }}<br>
+                        {{ convertTime(val.time) }}
+                    </b>
+                </span>
             </div>
         </div>
     </div>
@@ -62,20 +67,25 @@ export default {
 
                         if(v.match_match_teams.length > 0){
                             const red = v.match_match_teams.filter((x) => {
-                                return x.alliance == 1;
+                                if(x.alliance == 1){
+                                    match.red_team.push(x);
+                                }
                             });
-                            match.red_team.push(red);
-                            const blue = v.match_match_teams.filter((x) => {
-                                return x.alliance == 2;
-                            });
-                            console.log(blue);
-                            match.blue_team.push(blue);
+                            
+                            const blue = v.match_match_teams.filter((x) => {                                
+                                if(x.alliance == 2){
+                                    match.blue_team.push(x);
+                                }
+                            });                            
+                            
                             
                         }
                         schedule.push(match);
 
                     }
                 });
+
+                console.log(schedule);
 
                 schedule.sort((a, b) => a.order > b.order ? 1 : -1);
                 return schedule;

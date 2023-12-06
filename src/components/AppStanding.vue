@@ -23,6 +23,8 @@
     <td>{{ index + 1 }}</td>
     <td>{{ value.name }} ({{ value.n_order }})</td>
     <td v-for="i in 5" :key="i" :class="i">
+
+
         <span v-if="typeof value.score[5-i] !== 'undefined'">{{ value.score[5-i] }}</span>
         <span v-else>-</span>
         
@@ -76,19 +78,26 @@ export default {
                                 if(v.id == team.match_match_teams[i].team_id){
 
                                     if(team.is_finished == 1){
+
                                         if(team.match_match_teams[i].alliance == 1){
-                                            if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
-                                                standing[idx].score.push(0);
+                                            if(team.match_match_teams[i].is_availaibe == 0){
+                                                standing[idx].score.push('Vắng mặt');
+                                            }else if(team.match_match_teams[i].is_banned == 1){
+                                                standing[idx].score.push('Bị loại');
                                             }else{
                                                 standing[idx].score.push(team.red_score);
                                             }                                        
                                         }
                                         if(team.match_match_teams[i].alliance == 2){
-                                            if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
-                                                standing[idx].score.push(0);
+                                            
+
+                                            if(team.match_match_teams[i].is_availaibe == 0){
+                                                standing[idx].score.push('Vắng mặt');
+                                            }else if(team.match_match_teams[i].is_banned == 1){
+                                                standing[idx].score.push('Bị loại');
                                             }else{
                                                 standing[idx].score.push(team.blue_score);
-                                            }  
+                                            } 
                                         }
                                     }
                                 }
@@ -98,6 +107,8 @@ export default {
 
                     }
                 }); 
+
+                console.log(standing);
                 standing.sort((a, b) => a.avg > b.avg ? -1 : 1);
                 return standing;
             }
