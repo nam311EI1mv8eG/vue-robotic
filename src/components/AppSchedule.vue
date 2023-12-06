@@ -105,6 +105,7 @@ export default {
         
     },
     created(){
+        this.getAllMatchAction();
         this.interval = setInterval(() =>{    
             this.getAllMatchAction();        
         },30000);
