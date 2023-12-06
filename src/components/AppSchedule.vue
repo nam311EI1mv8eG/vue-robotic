@@ -123,6 +123,7 @@ export default {
         display: flex;
         align-items: center;
         padding: 5px;
+        font-weight: bold;
     }
     .schedule-result .match:nth-child(2n){
         background: #f5efef;

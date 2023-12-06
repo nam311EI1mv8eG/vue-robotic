@@ -161,9 +161,9 @@ table {
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
-  padding: 4px 8px;
-  
-  font-size: 14px;
+  padding: 2px 8px;
+    font-size: 14px;
+    font-weight: bold;
 }
 tr{
     background: #fff;
