@@ -15,6 +15,8 @@ header{
     display: flex;
     align-items: center;
     justify-content: space-around;
+    height: 56px;
+    padding-top: 17px;
 }
     .right-side img{
         max-width: 250px;
