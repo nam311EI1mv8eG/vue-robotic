@@ -57,11 +57,9 @@ export default {
             if (this.teamList !== undefined) {
 
                 const teamWidthSeason = this.teamList.filter((team) => team.season_id == this.currentSeason);
-
-                // console.log(teamWidthSeason);
-
                 const standing = [];
-                const standingInit = teamWidthSeason.filter((v) => {
+                
+                teamWidthSeason.filter((v) => {
                     var teamDetail = {};
                     teamDetail.id =  v.id;
                     teamDetail.name = v.name;
@@ -99,19 +97,9 @@ export default {
 
                     }
                 }); 
-
-               
-
                 standing.sort((a, b) => a.avg > b.avg ? -1 : 1);
-                // standing.sort((a, b) => a.avg.localeCompare(b.avg));
-
-                console.log(standing);
-
                 return standing;
-                
-                // console.log(standing);
             }
-            //return this.teamList;
            
         },
         ...mapState({
@@ -140,12 +128,16 @@ export default {
         
     },
     created(){
-        //this.interval = setInterval(() =>{            
-        //},30000);
+        
         this.getAllTeamAction();
         this.getAllMatchTeamAction();
         this.getAllSeasonAction();
         this.getAllMatchesInSeasonAction();
+
+        this.interval = setInterval(() =>{    
+            this.getAllTeamAction();
+            this.getAllMatchesInSeasonAction();
+        },30000);
     },
     
 }

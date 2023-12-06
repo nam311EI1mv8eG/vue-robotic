@@ -41,44 +41,43 @@ export default {
     
     computed : { 
 
-        
-
         getScheduleAndResult(){
             if (this.matches !== undefined) {
                 const teamWidthSeason = this.matches.filter((team) => team.season_id == this.currentSeason);
 
                 const schedule = [];
                 teamWidthSeason.filter((v) => {
-                    var match = {};
-                    match.id =  v.id;
-                    match.order = v.n_o;
-                    match.time = v.time;
-                    match.red_team = [];
-                    match.blue_team = [];
-                    match.red_score = v.red_score;
-                    match.blue_score = v.blue_score;
-                    match.finish = v.is_finished;
-                    match.field = v.field;
 
-                    if(v.match_match_teams.length > 0){
-                        const red = v.match_match_teams.filter((x) => {
-                            return x.alliance == 1;
-                        });
-                        match.red_team.push(red);
-                        const blue = v.match_match_teams.filter((x) => {
-                            return x.alliance == 2;
-                        });
-                        console.log(blue);
-                        match.blue_team.push(blue);
-                        
+                    if(v.is_finished == 0){
+                        var match = {};
+                        match.id =  v.id;
+                        match.order = v.n_o;
+                        match.time = v.time;
+                        match.red_team = [];
+                        match.blue_team = [];
+                        match.red_score = v.red_score;
+                        match.blue_score = v.blue_score;
+                        match.finish = v.is_finished;
+                        match.field = v.field;
+
+                        if(v.match_match_teams.length > 0){
+                            const red = v.match_match_teams.filter((x) => {
+                                return x.alliance == 1;
+                            });
+                            match.red_team.push(red);
+                            const blue = v.match_match_teams.filter((x) => {
+                                return x.alliance == 2;
+                            });
+                            console.log(blue);
+                            match.blue_team.push(blue);
+                            
+                        }
+                        schedule.push(match);
+
                     }
-                    schedule.push(match);
                 });
 
-                schedule.sort((a, b) => a.n_o > b.n_o ? -1 : 1);
-
-                console.log(schedule);
-
+                schedule.sort((a, b) => a.order > b.order ? 1 : -1);
                 return schedule;
             }
         },
@@ -106,9 +105,10 @@ export default {
         
     },
     created(){
-        //this.interval = setInterval(() =>{            
-        //},30000);
-        this.getAllMatchAction();
+        this.interval = setInterval(() =>{    
+            this.getAllMatchAction();        
+        },30000);
+        
     },
 }
 </script>
