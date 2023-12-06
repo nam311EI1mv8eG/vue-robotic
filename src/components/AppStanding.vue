@@ -58,7 +58,7 @@ export default {
 
                 const teamWidthSeason = this.teamList.filter((team) => team.season_id == this.currentSeason);
                 const standing = [];
-                
+
                 teamWidthSeason.filter((v) => {
                     var teamDetail = {};
                     teamDetail.id =  v.id;
@@ -74,21 +74,22 @@ export default {
                         for (let i = 0; i < team.match_match_teams.length; i++) {
                             let index = standing.find((v, idx) => {
                                 if(v.id == team.match_match_teams[i].team_id){
-                                    if(team.match_match_teams[i].alliance == 1){
 
-                                        if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
-                                            standing[idx].score.push(0);
-                                        }else{
-                                            standing[idx].score.push(team.red_score);
-                                        }                                       
-                                        
-                                    }
-                                    if(team.match_match_teams[i].alliance == 2){
-                                        if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
-                                            standing[idx].score.push(0);
-                                        }else{
-                                            standing[idx].score.push(team.blue_score);
-                                        }  
+                                    if(team.is_finished == 1){
+                                        if(team.match_match_teams[i].alliance == 1){
+                                            if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
+                                                standing[idx].score.push(0);
+                                            }else{
+                                                standing[idx].score.push(team.red_score);
+                                            }                                        
+                                        }
+                                        if(team.match_match_teams[i].alliance == 2){
+                                            if(team.match_match_teams[i].is_availaibe == 0 || team.match_match_teams[i].is_banned == 1){
+                                                standing[idx].score.push(0);
+                                            }else{
+                                                standing[idx].score.push(team.blue_score);
+                                            }  
+                                        }
                                     }
                                 }
                             });
