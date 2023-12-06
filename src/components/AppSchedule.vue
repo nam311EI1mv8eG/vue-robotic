@@ -118,7 +118,7 @@ export default {
         this.getAllMatchAction();
         this.interval = setInterval(() =>{    
             this.getAllMatchAction();        
-        },30000);
+        },15000);
         
     },
 }
