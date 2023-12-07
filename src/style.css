@@ -91,3 +91,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+/* Portrait tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    body{
+        min-height: auto;
+    }
+    #app{
+        padding: 10px;
+    }
+}
+
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 991px) {
+    #app{
+        padding: 20px;
+    }
+}

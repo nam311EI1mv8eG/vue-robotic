@@ -53,4 +53,20 @@ header{
     align-items: center;
     gap: 50px;
   }
+  @media (max-width: 991px) {
+    main{
+        flex-direction: column;
+    }
+    main .leftside{
+        flex:0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+    main .rightside{
+        flex:0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 20px;
+    }
+}
 </style>

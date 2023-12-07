@@ -154,4 +154,9 @@ export default {
 .blue{
     color: blue;
 }
+@media (max-width: 991px) {
+    .schedule-result{
+        margin-left: 0;
+    }
+}
 </style>
