@@ -19,7 +19,7 @@
     <th>M1</th>
     <th>AvgScore</th>
   </tr>
-  <tr v-for="(value,index) in filterTeamWithScore" :key="index" :class="index < 3 ? 'top' : ''">
+  <tr v-for="(value,index) in filterTeamWithScore" :key="index" :class="index < 4 ? 'top' : ''">
     <td>{{ index + 1 }}</td>
     <td>{{ value.name }} ({{ value.n_order }})</td>
     <td v-for="i in 5" :key="i" :class="i">
