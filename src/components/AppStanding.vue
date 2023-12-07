@@ -149,7 +149,7 @@ export default {
         this.interval = setInterval(() =>{    
             this.getAllTeamAction();
             this.getAllMatchesInSeasonAction();
-        },30000);
+        },15000);
     },
     
 }
