@@ -107,8 +107,7 @@ export default {
 
                     }
                 }); 
-
-                console.log(standing);
+                
                 standing.sort((a, b) => a.avg > b.avg ? -1 : 1);
                 return standing;
             }

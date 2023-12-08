@@ -14,17 +14,22 @@
                 </span>
             </div>
             <div class="total">
-                <span v-if="val.red_score > 0 || val.blue_score > 0" class="red">
-                    <b>
-                        {{ val.red_score }}<br>
-                        {{ val.blue_score }}
-                    </b>
+                <span v-if="val.finish == 1">
+                    Finished
                 </span>
-                <span v-else class="nam">
-                    <b>
-                        Sân {{ val.field }}<br>
-                        {{ convertTime(val.time) }}
-                    </b>
+                <span v-else>
+                    <span v-if="val.red_score > 0 || val.blue_score > 0" class="red">
+                        <b>
+                            {{ val.red_score }}<br>
+                            <span class="blue">{{ val.blue_score }}</span>
+                        </b>
+                    </span>
+                    <span v-else class="nam">
+                        <b>
+                            Sân {{ val.field }}<br>
+                            {{ convertTime(val.time) }}
+                        </b>
+                    </span>
                 </span>
             </div>
         </div>
@@ -51,44 +56,58 @@ export default {
                 const teamWidthSeason = this.matches.filter((team) => team.season_id == this.currentSeason);
 
                 const schedule = [];
+                const match_is_finish = [];
+                const result = [];
+
                 teamWidthSeason.filter((v) => {
 
-                    if(v.is_finished == 0){
-                        var match = {};
-                        match.id =  v.id;
-                        match.order = v.n_o;
-                        match.time = v.time;
-                        match.red_team = [];
-                        match.blue_team = [];
-                        match.red_score = v.red_score;
-                        match.blue_score = v.blue_score;
-                        match.finish = v.is_finished;
-                        match.field = v.field;
+                    var match = {};
+                    match.id =  v.id;
+                    match.order = v.n_o;
+                    match.time = v.time;
+                    match.red_team = [];
+                    match.blue_team = [];
+                    match.red_score = v.red_score;
+                    match.blue_score = v.blue_score;
+                    match.finish = v.is_finished;
+                    match.field = v.field;
 
-                        if(v.match_match_teams.length > 0){
-                            const red = v.match_match_teams.filter((x) => {
-                                if(x.alliance == 1){
-                                    match.red_team.push(x);
-                                }
-                            });
-                            
-                            const blue = v.match_match_teams.filter((x) => {                                
-                                if(x.alliance == 2){
-                                    match.blue_team.push(x);
-                                }
-                            });                            
-                            
-                            
-                        }
+                    if(v.match_match_teams.length > 0){
+                        const red = v.match_match_teams.filter((x) => {
+                            if(x.alliance == 1){
+                                match.red_team.push(x);
+                            }
+                        });                            
+                        const blue = v.match_match_teams.filter((x) => {                                
+                            if(x.alliance == 2){
+                                match.blue_team.push(x);
+                            }
+                        });
+                    }
+
+                    if(v.is_finished == 0){     
                         schedule.push(match);
-
+                    }else{
+                        match_is_finish.push(match);
                     }
                 });
 
-                console.log(schedule);
+                // console.log('Schedule',schedule);
+                // console.log('match_is_finish',match_is_finish);
 
-                schedule.sort((a, b) => a.order > b.order ? 1 : -1);
-                return schedule;
+                if(match_is_finish.length > 0){
+                    match_is_finish.sort((a, b) => a.order > b.order ? 1 : -1);
+                    var last = match_is_finish.at(-1);
+                    result.push(last);
+                }
+
+                if(schedule.length > 0){
+                    schedule.sort((a, b) => a.order > b.order ? 1 : -1);
+                }
+
+                const mergeResult = [...result, ...schedule];
+                
+                return mergeResult;
             }
         },
 
