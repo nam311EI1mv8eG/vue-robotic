@@ -2,7 +2,12 @@
   <h2>Math Schedule and Results</h2>
     <div class="schedule-result" >
         <div v-for="(val,index) in getScheduleAndResult" :key="index" class="match" :class="val.finish == 1 ? 'finish' : ''">
-            <div class="match-order">Q{{ val.order }}</div>
+            <div class="match-order">
+                Q{{ val.order }}
+                <span v-if="val.finish == 1">
+                    (Finished)
+                </span>
+            </div>
             <div class="red-team red">
                 <span v-for="(v,i) in val.red_team" :key="i">
                     {{ v.team.name }}
@@ -14,10 +19,8 @@
                 </span>
             </div>
             <div class="total">
-                <span v-if="val.finish == 1">
-                    Finished
-                </span>
-                <span v-else>
+                
+                
                     <span v-if="val.red_score > 0 || val.blue_score > 0" class="red">
                         <b>
                             {{ val.red_score }}<br>
@@ -30,7 +33,7 @@
                             {{ convertTime(val.time) }}
                         </b>
                     </span>
-                </span>
+                
             </div>
         </div>
     </div>
