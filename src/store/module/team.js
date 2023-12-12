@@ -12,7 +12,7 @@ const state = () => {
         matchTeam: [],
         allSeason: [],
         matchesInSeason: [],
-        currentSeason: 1,
+        currentSeason: 6,
         matches: [],
     };
 };
