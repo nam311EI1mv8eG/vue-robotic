@@ -14,7 +14,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html {
+    box-sizing: border-box;
+}
 
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
 a {
   font-weight: 500;
   color: #646cff;
@@ -77,6 +85,7 @@ button:focus-visible {
   padding: 0;
   text-align: center;
   width: 100%;
+  overflow: hidden;
 }
 
 @media (prefers-color-scheme: light) {

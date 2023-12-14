@@ -13,35 +13,37 @@
         </div>
     </div>
     <h2>Qualification Rankings</h2>
-    <table>
-        <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>M5</th>
-            <th>M4</th>
-            <th>M3</th>
-            <th>M2</th>
-            <th>M1</th>
-            <th>AvgScore</th>
-        </tr>
-        <tr
-            v-for="(value, index) in filterTeamWithScore"
-            :key="index"
-            :class="index < 4 ? 'top' : ''"
-        >
-            <td>{{ index + 1 }}</td>
-            <td>{{ value.name }} ({{ value.n_order }})</td>
-            <td v-for="i in 5" :key="i" :class="i">
-                <span v-if="typeof value.score[5 - i] !== 'undefined'">{{
-                    value.score[5 - i]
-                }}</span>
-                <span v-else>-</span>
-            </td>
-            <td>
-                <b class="blue">{{ value.avg }}</b>
-            </td>
-        </tr>
-    </table>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>M5</th>
+                <th>M4</th>
+                <th>M3</th>
+                <th>M2</th>
+                <th>M1</th>
+                <th>AvgScore</th>
+            </tr>
+            <tr
+                v-for="(value, index) in filterTeamWithScore"
+                :key="index"
+                :class="index < 4 ? 'top' : ''"
+            >
+                <td>{{ index + 1 }}</td>
+                <td>{{ value.name }} ({{ value.n_order }})</td>
+                <td v-for="i in 5" :key="i" :class="i">
+                    <span v-if="typeof value.score[5 - i] !== 'undefined'">{{
+                        value.score[5 - i]
+                    }}</span>
+                    <span v-else>-</span>
+                </td>
+                <td>
+                    <b class="blue">{{ value.avg }}</b>
+                </td>
+            </tr>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -228,5 +230,10 @@ tr.top b.blue {
 #season .radio input {
     margin-bottom: 0;
     margin-top: 0;
+}
+@media (max-width: 767px) {
+    .table-responsive {
+        overflow: auto;
+    }
 }
 </style>
