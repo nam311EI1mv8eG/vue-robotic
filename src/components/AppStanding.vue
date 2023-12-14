@@ -217,6 +217,8 @@ tr.top b.blue {
     display: flex;
     gap: 30px;
     font-size: 12px;
+    position: absolute;
+    top: 10px;
 }
 #season .radio {
     display: flex;
