@@ -29,7 +29,11 @@ header .mobile-v {
     display: none;
 }
 .left-side img {
-    max-width: 100px;
+    max-width: 9.8em;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 99;
 }
 .right-side img {
     max-width: 250px;
