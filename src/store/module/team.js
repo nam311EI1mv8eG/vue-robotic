@@ -12,7 +12,7 @@ const state = () => {
         matchTeam: [],
         allSeason: [],
         matchesInSeason: [],
-        currentSeason: 6,
+        currentSeason: null,
         matches: [],
     };
 };
@@ -60,9 +60,19 @@ const actions = {
         const payload = await getAllSeasonApi();
         context.commit("setAllSeasonMutation", payload);
     },
-    async getAllMatchesInSeasonAction({ commit, state }) {
-        const payload = await getAllMatchesInSeasonApi(state.currentSeason);
-        commit("setAllMatchesInSeasonMutation", payload);
+    async getAllMatchesInSeasonAction({ context, commit, state }) {
+        if (state.currentSeason == null) {
+            const seasons = await getAllSeasonApi();
+
+            console.log(seasons.data[0].id);
+
+            const payload = await getAllMatchesInSeasonApi(seasons.data[0].id);
+            commit("setCurrentSeasonMutation", seasons.data[0].id);
+            commit("setAllMatchesInSeasonMutation", payload);
+        } else {
+            const payload = await getAllMatchesInSeasonApi(state.currentSeason);
+            commit("setAllMatchesInSeasonMutation", payload);
+        }
     },
 
     async getAllMatchAction({ commit, state }) {
